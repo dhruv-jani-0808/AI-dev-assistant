@@ -2346,7 +2346,7 @@
         <div class="editor-wrap">
           <div class="line-numbers" id="lineNumbers" aria-hidden="true">1</div>
           <textarea id="codeEditor" placeholder="# Paste your code here or click 'Try Sample Code' above…"
-            spellcheck="false" autocorrect="off" autocapitalize="off" aria-label="Code Editor"></textarea>
+            spellcheck="false" autocorrect="off" autocapitalize="off" autocomplete="off" aria-label="Code Editor"></textarea>
         </div>
 
         <div class="editor-footer">
@@ -2643,6 +2643,14 @@
         lineNumbers.innerHTML = val
           ? Array.from({ length: lineCount }, (_, i) => i + 1).join('<br>')
           : '1';
+      }
+
+      function looksLikeRestoredPageSource(text) {
+        return /<\s*html|<\s*style|<\s*script|function\s+updateEditor\s*\(|\.stat-bar|\.hero\s*\{|\.workspace\s*\{/i.test(text);
+      }
+
+      if (looksLikeRestoredPageSource(editor.value || '')) {
+        editor.value = '';
       }
 
       editor.addEventListener('input', updateEditor);
